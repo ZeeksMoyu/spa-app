@@ -1,26 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from 'react';
+import Products from './components/products/Products';
 
-function App() {
+const App = () => {
+  const searchParams = new URLSearchParams(window.location.search);
+  let startParams;
+  searchParams.has('id') ? startParams = searchParams.get('id') : startParams = undefined
+
+  const [id, setId] = useState<any>(startParams);
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    if (searchParams.has('id')) {
+      console.log(searchParams.get('id'))
+      setId(parseInt(searchParams.get('id') as string))
+    }
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Products setId={setId} id={id} />
   );
-}
+};
 
-export default App;
+export default App
